@@ -44,23 +44,23 @@ export default class LoopForm extends React.Component {
         //     console.log('running');
         //     return;
         // }
-        this.one.play();
-        this.one.pause();
+        this.one.current.play();
+        this.one.current.pause();
 
-        this.two.play();
-        this.two.pause();
+        this.two.current.play();
+        this.two.current.pause();
 
-        this.three.play();
-        this.three.pause();
+        this.three.current.play();
+        this.three.current.pause();
 
-        this.four.play();
-        this.four.pause();
+        this.four.current.play();
+        this.four.current.pause();
 
-        this.five.play();
-        this.five.pause();
+        this.five.current.play();
+        this.five.current.pause();
 
-        this.six.play();
-        this.six.pause();
+        this.six.current.play();
+        this.six.current.pause();
         
         console.log('State: ', this.state);
         event.preventDefault();
