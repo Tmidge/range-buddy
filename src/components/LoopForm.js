@@ -31,23 +31,23 @@ export default class LoopForm extends React.Component {
         document.addEventListener('touchstart', function () {
             // document.getElementsByTagName('audio')[0].play();
             // document.getElementsByTagName('audio')[0].pause();
-            this.one.current.play();
-            this.one.current.pause();
+            this.one.play();
+            this.one.pause();
 
-            this.two.current.play();
-            this.two.current.pause();
+            this.two.play();
+            this.two.pause();
 
-            this.three.current.play();
-            this.three.current.pause();
+            this.three.play();
+            this.three.pause();
 
-            this.four.current.play();
-            this.four.current.pause();
+            this.four.play();
+            this.four.pause();
 
-            this.five.current.play();
-            this.five.current.pause();
+            this.five.play();
+            this.five.pause();
 
-            this.six.current.play();
-            this.six.current.pause();
+            this.six.play();
+            this.six.pause();
         });
     }
 
