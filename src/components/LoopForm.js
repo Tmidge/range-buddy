@@ -87,12 +87,12 @@ export default class LoopForm extends React.Component {
         return (
             <div>
                 <div>
-                    <audio ref={this.one} id="one" src={one}/>
-                    <audio ref={this.two} id="two" src={two}/>
-                    <audio ref={this.three} id="three" src={three}/>
-                    <audio ref={this.four} id="four" src={four}/>
-                    <audio ref={this.five} id="five" src={five}/>
-                    <audio ref={this.six} id="six" src={six}/>
+                    <audio ref={this.one} id="one" src={one} controls/>
+                    <audio ref={this.two} id="two" src={two} controls/>
+                    <audio ref={this.three} id="three" src={three} controls/>
+                    <audio ref={this.four} id="four" src={four} controls/>
+                    <audio ref={this.five} id="five" src={five} controls/>
+                    <audio ref={this.six} id="six" src={six} controls/>
                 </div>
                 <form onSubmit={this.createSoundLoop}>
                     <h4>Create loop</h4>
