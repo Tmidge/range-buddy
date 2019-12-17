@@ -183,6 +183,21 @@ export default class LoopForm extends React.Component {
                             </Row>
                         </Col>
                     </Row>
+                   
+                        {(() => {
+                           if(this.state.isRunning) {
+                               return  <Row>
+                                            <Col>
+                                            </Col>
+                                            <Col xs={8}>
+                                                <Form.Label className="Running-text">RUNNING</Form.Label>
+                                            </Col>
+                                            <Col>
+                                            </Col>
+                                        </Row>
+                           }
+                        }
+                        )()}
                 </Form>
 
                 {/* <form onSubmit={this.createSoundLoop}>

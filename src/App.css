@@ -32,3 +32,9 @@
   background: rgba(0,0,0, .6);
   border-color: gray;
 }
+
+.Running-text {
+  color: whitesmoke;
+  margin-top: 24px;
+  font-size: 44px;
+}
