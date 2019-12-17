@@ -28,8 +28,13 @@ export default class LoopForm extends React.Component {
         this.five = React.createRef();
         this.six = React.createRef();
 
-
+        document.addEventListener('touchstart', function () {
+            document.getElementsByTagName('audio')[0].play();
+            document.getElementsByTagName('audio')[0].pause();
+        });
     }
+
+    
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
