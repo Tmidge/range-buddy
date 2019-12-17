@@ -29,8 +29,25 @@ export default class LoopForm extends React.Component {
         this.six = React.createRef();
 
         document.addEventListener('touchstart', function () {
-            document.getElementsByTagName('audio')[0].play();
-            document.getElementsByTagName('audio')[0].pause();
+            // document.getElementsByTagName('audio')[0].play();
+            // document.getElementsByTagName('audio')[0].pause();
+            this.one.current.play();
+            this.one.current.pause();
+
+            this.two.current.play();
+            this.two.current.pause();
+
+            this.three.current.play();
+            this.three.current.pause();
+
+            this.four.current.play();
+            this.four.current.pause();
+
+            this.five.current.play();
+            this.five.current.pause();
+
+            this.six.current.play();
+            this.six.current.pause();
         });
     }
 
