@@ -28,27 +28,9 @@ export default class LoopForm extends React.Component {
         this.five = React.createRef();
         this.six = React.createRef();
 
-        document.addEventListener('touchstart', function () {
-            // document.getElementsByTagName('audio')[0].play();
-            // document.getElementsByTagName('audio')[0].pause();
-            this.one.play();
-            this.one.pause();
-
-            this.two.play();
-            this.two.pause();
-
-            this.three.play();
-            this.three.pause();
-
-            this.four.play();
-            this.four.pause();
-
-            this.five.play();
-            this.five.pause();
-
-            this.six.play();
-            this.six.pause();
-        });
+        // document.addEventListener('touchstart', function () {
+            
+        // });
     }
 
     
@@ -62,6 +44,23 @@ export default class LoopForm extends React.Component {
         //     console.log('running');
         //     return;
         // }
+        this.one.play();
+        this.one.pause();
+
+        this.two.play();
+        this.two.pause();
+
+        this.three.play();
+        this.three.pause();
+
+        this.four.play();
+        this.four.pause();
+
+        this.five.play();
+        this.five.pause();
+
+        this.six.play();
+        this.six.pause();
         
         console.log('State: ', this.state);
         event.preventDefault();
