@@ -1,4 +1,9 @@
 import React from "react";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import one from '../assets/1.wav';
 import two from '../assets/2.wav';
 import three from '../assets/3.wav';
@@ -19,11 +24,15 @@ export default class LoopForm extends React.Component {
             randomDelayMax: 0,
             random: null,
             soundArray: [],
+            isRunning: false,
         };
 
         this.createSoundLoop = this.createSoundLoop.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+        this.handleUpButtonClick = this.handleUpButtonClick.bind(this);
+        this.handleDownButtonClick = this.handleDownButtonClick.bind(this);
+
 
         this.one = React.createRef();
         this.two = React.createRef();
@@ -53,10 +62,10 @@ export default class LoopForm extends React.Component {
     // }
 
     createSoundLoop(event) {
-        // if(this.state.running) {
-        //     console.log('running');
-        //     return;
-        // }
+        event.preventDefault();
+        if(this.state.isRunning === true) {
+            return;
+        }
         this.one.current.play();
         this.one.current.pause();
 
@@ -74,9 +83,23 @@ export default class LoopForm extends React.Component {
 
         this.six.current.play();
         this.six.current.pause();
-        
-        console.log('State: ', this.state);
+
+        this.setState({isRunning: true}, this.runLoop(event));
+    } 
+    
+    handleUpButtonClick(event) {
         event.preventDefault();
+        console.log(event.target);
+        this.setState({[event.target.name]: this.state[event.target.name] + 1});
+    }
+
+    handleDownButtonClick(event) {
+        event.preventDefault();
+        console.log(event.target);
+        this.setState({[event.target.name]: this.state[event.target.name] - 1});
+    }
+
+    runLoop() {
         const computedCount = parseInt(this.state.count);
         let soundArray = [];
         for (var i=0; i < computedCount; i++) {
@@ -87,16 +110,16 @@ export default class LoopForm extends React.Component {
 
         setTimeout(()=>{
             soundArray.forEach((soundRef, i) => {
-                // const delay = this.delay();
                 setTimeout(()=>{ 
-                    // console.log(delay);
-                    this[soundRef].current.play()},
+                    this[soundRef].current.play();
+                    if(i === (soundArray.length -1)) {
+                        this.setState({isRunning: false});
+                    }
+                },
                 i * this.state.delay * 1000);
             });
         }, parseInt(this.state.initialDelay) * 1000);
-
-        // this.setState({isRunning: false});
-    }   
+    }
 
     render() {
         return (
@@ -109,37 +132,95 @@ export default class LoopForm extends React.Component {
                     <audio ref={this.five} id="five" src={five}/>
                     <audio ref={this.six} id="six" src={six}/>
                 </div>
-                <form onSubmit={this.createSoundLoop}>
+                <Form onSubmit={this.createSoundLoop}>
+                    <Row>
+                        <Col className="down-buttons">
+                            <Row>
+                                <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleDownButtonClick}>
+                                    -
+                                </Button>
+                            </Row>
+                            <Row>
+                                <Button size="lg" name="count" variant="dark" onClick={this.handleDownButtonClick}>
+                                    -
+                                </Button>
+                            </Row>
+                            <Row>
+                                <Button size="lg" name="delay" variant="dark" onClick={this.handleDownButtonClick}>
+                                    -
+                                </Button>
+                            </Row>
+                        </Col>
+                        <Col xs={8}>
+                            <Form.Label>Initial Delay: </Form.Label>
+                            <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
+
+                            <Form.Label >Count: </Form.Label>
+                            <Form.Control size="lg" name="count" type="text" value={this.state.count} onChange={this.handleChange}/>
+
+                            <Form.Label >Delay: </Form.Label>
+                            <Form.Control size="lg" name="delay" type="text" value={this.state.delay} onChange={this.handleChange}/>
+
+                            <Button variant="dark" size="lg" type="submit" value="Submit">
+                                GO!
+                            </Button>
+                        </Col>
+                        <Col className="up-buttons">
+                            <Row>
+                                <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleUpButtonClick}>
+                                    +
+                                </Button>
+                            </Row>
+                            <Row>
+                                <Button size="lg" name="count" variant="dark" onClick={this.handleUpButtonClick}>
+                                    +
+                                </Button>
+                            </Row>
+                            <Row>
+                                <Button size="lg" name="delay" variant="dark" onClick={this.handleUpButtonClick}>
+                                    +
+                                </Button>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Form>
+
+                {/* <form onSubmit={this.createSoundLoop}>
                     <h4>Create loop</h4>
-                    <label>Initial Delay: 
-                        <input name="initialDelay" type="number" value={this.state.initialDelay} onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>Count: 
-                        <input name="count" type="number" value={this.state.count} onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>Delay: 
-                        <input name="delay" type="number" value={this.state.delay} onChange={this.handleChange}/>
-                    </label>
-                    {/* <label>Random Delay min: 
+                    <div>
+                        <label>Initial Delay: 
+                            <input sm={12} name="initialDelay" type="number" value={this.state.initialDelay} onChange={this.handleChange}/>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Count: 
+                            <input name="count" type="number" value={this.state.count} onChange={this.handleChange}/>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Delay: 
+                            <input name="delay" type="number" value={this.state.delay} onChange={this.handleChange}/>
+                        </label>
+                    </div>
+                    <label>Random Delay min: 
                         <input name="randomDelayMin" type="number" value={this.state.randomDelayMin} onChange={this.handleChange}/>
                     </label>
                     <label>Random Delay max: 
                         <input name="randomDelayMax" type="number" value={this.state.randomDelayMax} onChange={this.handleChange}/>
-                    </label> */}
+                    </label>
                     <br/>
-                    <input type="submit" value="Submit"/>
-                    <br/>
+                    <Button  variant="primary" size="lg" type="submit" value="Submit">
+                        GO!
+                    </Button>
                     <div>
-                        {/* {this.state.soundArray.toString()} */}
+                        {this.state.soundArray.toString()}
                         <ul>
                         {this.state.soundArray.map((value, index) => {
                             return <li key={index}>{value}</li>
                         })}
                         </ul>
                     </div>
-                </form>
+                </form> */}
             </div>
            
         );
