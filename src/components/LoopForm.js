@@ -89,13 +89,11 @@ export default class LoopForm extends React.Component {
     
     handleUpButtonClick(event) {
         event.preventDefault();
-        console.log(event.target);
         this.setState({[event.target.name]: this.state[event.target.name] + 1});
     }
 
     handleDownButtonClick(event) {
         event.preventDefault();
-        console.log(event.target);
         this.setState({[event.target.name]: this.state[event.target.name] - 1});
     }
 
@@ -136,7 +134,7 @@ export default class LoopForm extends React.Component {
                     <Row>
                         <Col className="down-buttons">
                             <Row>
-                                <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleDownButtonClick}>
+                                <Button className="first-button" size="lg" name="initialDelay" variant="dark" onClick={this.handleDownButtonClick}>
                                     -
                                 </Button>
                             </Row>
@@ -154,12 +152,21 @@ export default class LoopForm extends React.Component {
                         <Col xs={8}>
                             <Form.Label>Initial Delay: </Form.Label>
                             <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
+                            <Form.Text className="text-muted">
+                                One time Pause before first call out.
+                            </Form.Text>
 
                             <Form.Label >Count: </Form.Label>
                             <Form.Control size="lg" name="count" type="text" value={this.state.count} onChange={this.handleChange}/>
+                            <Form.Text className="text-muted">
+                                Number of call outs.
+                            </Form.Text>
 
                             <Form.Label >Delay: </Form.Label>
                             <Form.Control size="lg" name="delay" type="text" value={this.state.delay} onChange={this.handleChange}/>
+                            <Form.Text className="text-muted">
+                                Delay between each call out.
+                            </Form.Text>
 
                             <Button variant="dark" size="lg" type="submit" value="Submit">
                                 GO!
@@ -167,7 +174,7 @@ export default class LoopForm extends React.Component {
                         </Col>
                         <Col className="up-buttons">
                             <Row>
-                                <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleUpButtonClick}>
+                                <Button className="first-button" size="lg" name="initialDelay" variant="dark" onClick={this.handleUpButtonClick}>
                                     +
                                 </Button>
                             </Row>

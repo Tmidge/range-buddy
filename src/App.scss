@@ -1,0 +1,57 @@
+.App {
+  padding-top: 16px;
+  text-align: center;
+  background-color: #121212;
+  height: 100vh;
+}
+
+.col-8 .btn.btn-dark {
+  margin-top: 24px;
+}
+
+.up-buttons .row .first-button.btn.btn-dark, .down-buttons .row .first-button.btn.btn-dark {
+  margin-top: 32px;
+}
+
+.up-buttons .btn.btn-dark {
+  margin-top: 55px;
+  float: left;
+}
+
+.down-buttons .row {
+  justify-content: flex-end;
+  .btn.btn-dark{
+    margin-top: 55px;
+  }
+}
+
+.form-label {
+  color: whitesmoke;
+}
+.row {
+    .form-control {
+      text-align: center;
+      color: whitesmoke;
+      background: rgba(0,0,0, .38);
+      border-color: #1F1A24;
+      &:focus {
+        text-align: center;
+        color: whitesmoke;
+        background: rgba(0,0,0, .6);
+        border-color: gray;
+    }
+  }
+}
+
+.Running-text {
+  color: whitesmoke;
+  margin-top: 24px;
+  font-size: 44px;
+}
+
+.app-description {
+  color: gray;
+  margin-top: 24px;
+  width: 100%;
+  justify-content: center;
+}

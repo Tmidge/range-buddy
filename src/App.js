@@ -1,7 +1,7 @@
 import React from 'react';
 import LoopForm from './components/LoopForm'
 
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
