@@ -11,9 +11,11 @@ export default class LoopForm extends React.Component {
         super();
 
         this.state = {
-            count: 0,
-            delay: 0,
+            count: 10,
+            delay: 2,
+            initialDelay: 5,
             sounds: ['one','two','three','four','five','six'],
+            running: false,
         };
 
         this.createSoundLoop = this.createSoundLoop.bind(this);
@@ -34,6 +36,11 @@ export default class LoopForm extends React.Component {
     }
 
     createSoundLoop(event) {
+        // if(this.state.running) {
+        //     console.log('running');
+        //     return;
+        // }
+        
         console.log('State: ', this.state);
         event.preventDefault();
         const computedCount = parseInt(this.state.count);
@@ -42,12 +49,17 @@ export default class LoopForm extends React.Component {
             soundArray.push(this.state.sounds[Math.floor(Math.random()*this.state.sounds.length)]);
         }
         console.log(soundArray);
-        soundArray.forEach((soundRef, i) => {
-            setTimeout(()=>{ 
-                console.log(soundRef);
-                this[soundRef].current.play()},
-            i * parseInt(this.state.delay));
-        })
+
+        setTimeout(()=>{
+            soundArray.forEach((soundRef, i) => {
+                setTimeout(()=>{ 
+                    console.log(soundRef);
+                    this[soundRef].current.play()},
+                i * parseInt(this.state.delay) * 1000);
+            });
+        }, parseInt(this.state.initialDelay) * 1000);
+
+        this.setState({isRunning: false});
     }   
 
     render() {
@@ -63,12 +75,18 @@ export default class LoopForm extends React.Component {
                 </div>
                 <form onSubmit={this.createSoundLoop}>
                     <h4>Create loop</h4>
+                    <label>Initial Delay: 
+                        <input name="initialDelay" type="number" value={this.state.initialDelay} onChange={this.handleChange}/>
+                    </label>
+                    <br/>
                     <label>Count: 
                         <input name="count" type="number" value={this.state.count} onChange={this.handleChange}/>
                     </label>
+                    <br/>
                     <label>Delay: 
                         <input name="delay" type="number" value={this.state.delay} onChange={this.handleChange}/>
                     </label>
+                    <br/>
                     <input type="submit" value="Submit"/>
                 </form>
             </div>
