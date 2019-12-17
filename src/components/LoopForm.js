@@ -12,7 +12,7 @@ export default class LoopForm extends React.Component {
 
         this.state = {
             count: 10,
-            delay: 0,
+            delay: 4,
             initialDelay: 5,
             sounds: ['one','two','three','four','five','six'],
             randomDelayMin: 0,
