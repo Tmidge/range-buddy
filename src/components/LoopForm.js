@@ -152,13 +152,13 @@ export default class LoopForm extends React.Component {
                             </Row>
                         </Col>
                         <Col xs={8}>
-                            <Form.Label>Initial Delay (one time pause before it begins): </Form.Label>
+                            <Form.Label>Initial Delay: </Form.Label>
                             <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
 
-                            <Form.Label >Count (number of call outs): </Form.Label>
+                            <Form.Label >Count: </Form.Label>
                             <Form.Control size="lg" name="count" type="text" value={this.state.count} onChange={this.handleChange}/>
 
-                            <Form.Label >Delay (delay between each call out): </Form.Label>
+                            <Form.Label >Delay: </Form.Label>
                             <Form.Control size="lg" name="delay" type="text" value={this.state.delay} onChange={this.handleChange}/>
 
                             <Button variant="dark" size="lg" type="submit" value="Submit">
