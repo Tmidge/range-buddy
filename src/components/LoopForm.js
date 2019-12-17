@@ -12,14 +12,18 @@ export default class LoopForm extends React.Component {
 
         this.state = {
             count: 10,
-            delay: 2,
+            delay: 0,
             initialDelay: 5,
             sounds: ['one','two','three','four','five','six'],
-            running: false,
+            randomDelayMin: 0,
+            randomDelayMax: 0,
+            random: null,
+            soundArray: [],
         };
 
         this.createSoundLoop = this.createSoundLoop.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 
         this.one = React.createRef();
         this.two = React.createRef();
@@ -27,10 +31,6 @@ export default class LoopForm extends React.Component {
         this.four = React.createRef();
         this.five = React.createRef();
         this.six = React.createRef();
-
-        // document.addEventListener('touchstart', function () {
-            
-        // });
     }
 
     
@@ -38,6 +38,19 @@ export default class LoopForm extends React.Component {
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
     }
+
+    handleCheckboxChange(event) {
+        this.setState({ random: event.target.random });
+    }
+
+    // delay(){
+    //     if(this.state.delay > 0) {
+    //         return parseInt(this.state.delay);
+    //     }
+    //     const min = Math.ceil(parseInt(this.state.randomDelayMin));
+    //     const max = Math.floor(parseInt(this.state.randomDelayMax));
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
 
     createSoundLoop(event) {
         // if(this.state.running) {
@@ -65,34 +78,36 @@ export default class LoopForm extends React.Component {
         console.log('State: ', this.state);
         event.preventDefault();
         const computedCount = parseInt(this.state.count);
-        let soundArray = []
+        let soundArray = [];
         for (var i=0; i < computedCount; i++) {
             soundArray.push(this.state.sounds[Math.floor(Math.random()*this.state.sounds.length)]);
         }
-        console.log(soundArray);
+
+        this.setState({soundArray});
 
         setTimeout(()=>{
             soundArray.forEach((soundRef, i) => {
+                // const delay = this.delay();
                 setTimeout(()=>{ 
-                    console.log(soundRef);
+                    // console.log(delay);
                     this[soundRef].current.play()},
-                i * parseInt(this.state.delay) * 1000);
+                i * this.state.delay * 1000);
             });
         }, parseInt(this.state.initialDelay) * 1000);
 
-        this.setState({isRunning: false});
+        // this.setState({isRunning: false});
     }   
 
     render() {
         return (
             <div>
                 <div>
-                    <audio ref={this.one} id="one" src={one} controls/>
-                    <audio ref={this.two} id="two" src={two} controls/>
-                    <audio ref={this.three} id="three" src={three} controls/>
-                    <audio ref={this.four} id="four" src={four} controls/>
-                    <audio ref={this.five} id="five" src={five} controls/>
-                    <audio ref={this.six} id="six" src={six} controls/>
+                    <audio ref={this.one} id="one" src={one}/>
+                    <audio ref={this.two} id="two" src={two}/>
+                    <audio ref={this.three} id="three" src={three}/>
+                    <audio ref={this.four} id="four" src={four}/>
+                    <audio ref={this.five} id="five" src={five}/>
+                    <audio ref={this.six} id="six" src={six}/>
                 </div>
                 <form onSubmit={this.createSoundLoop}>
                     <h4>Create loop</h4>
@@ -107,8 +122,23 @@ export default class LoopForm extends React.Component {
                     <label>Delay: 
                         <input name="delay" type="number" value={this.state.delay} onChange={this.handleChange}/>
                     </label>
+                    {/* <label>Random Delay min: 
+                        <input name="randomDelayMin" type="number" value={this.state.randomDelayMin} onChange={this.handleChange}/>
+                    </label>
+                    <label>Random Delay max: 
+                        <input name="randomDelayMax" type="number" value={this.state.randomDelayMax} onChange={this.handleChange}/>
+                    </label> */}
                     <br/>
                     <input type="submit" value="Submit"/>
+                    <br/>
+                    <div>
+                        {/* {this.state.soundArray.toString()} */}
+                        <ul>
+                        {this.state.soundArray.map((value, index) => {
+                            return <li key={index}>{value}</li>
+                        })}
+                        </ul>
+                    </div>
                 </form>
             </div>
            
