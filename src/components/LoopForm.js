@@ -152,13 +152,13 @@ export default class LoopForm extends React.Component {
                             </Row>
                         </Col>
                         <Col xs={8}>
-                            <Form.Label>Initial Delay: </Form.Label>
+                            <Form.Label>Initial Delay (one time pause before it begins): </Form.Label>
                             <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
 
-                            <Form.Label >Count: </Form.Label>
+                            <Form.Label >Count (number of call outs): </Form.Label>
                             <Form.Control size="lg" name="count" type="text" value={this.state.count} onChange={this.handleChange}/>
 
-                            <Form.Label >Delay: </Form.Label>
+                            <Form.Label >Delay (delay between each call out): </Form.Label>
                             <Form.Control size="lg" name="delay" type="text" value={this.state.delay} onChange={this.handleChange}/>
 
                             <Button variant="dark" size="lg" type="submit" value="Submit">
@@ -183,59 +183,26 @@ export default class LoopForm extends React.Component {
                             </Row>
                         </Col>
                     </Row>
-                   
-                        {(() => {
-                           if(this.state.isRunning) {
-                               return  <Row>
-                                            <Col>
-                                            </Col>
-                                            <Col xs={8}>
-                                                <Form.Label className="Running-text">RUNNING</Form.Label>
-                                            </Col>
-                                            <Col>
-                                            </Col>
-                                        </Row>
-                           }
+                    {(() => {
+                        if(this.state.isRunning) {
+                            return  <Row>
+                                        <Col>
+                                        </Col>
+                                        <Col xs={8}>
+                                            <Form.Label className="Running-text">RUNNING</Form.Label>
+                                        </Col>
+                                        <Col>
+                                        </Col>
+                                    </Row>
                         }
-                        )()}
+                    }
+                    )()}
+                    <Row>
+                        <div class="app-description">
+                            This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-6. It is in development and features are added frequently.
+                        </div>
+                    </Row>
                 </Form>
-
-                {/* <form onSubmit={this.createSoundLoop}>
-                    <h4>Create loop</h4>
-                    <div>
-                        <label>Initial Delay: 
-                            <input sm={12} name="initialDelay" type="number" value={this.state.initialDelay} onChange={this.handleChange}/>
-                        </label>
-                    </div>
-                    <div>
-                        <label>Count: 
-                            <input name="count" type="number" value={this.state.count} onChange={this.handleChange}/>
-                        </label>
-                    </div>
-                    <div>
-                        <label>Delay: 
-                            <input name="delay" type="number" value={this.state.delay} onChange={this.handleChange}/>
-                        </label>
-                    </div>
-                    <label>Random Delay min: 
-                        <input name="randomDelayMin" type="number" value={this.state.randomDelayMin} onChange={this.handleChange}/>
-                    </label>
-                    <label>Random Delay max: 
-                        <input name="randomDelayMax" type="number" value={this.state.randomDelayMax} onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <Button  variant="primary" size="lg" type="submit" value="Submit">
-                        GO!
-                    </Button>
-                    <div>
-                        {this.state.soundArray.toString()}
-                        <ul>
-                        {this.state.soundArray.map((value, index) => {
-                            return <li key={index}>{value}</li>
-                        })}
-                        </ul>
-                    </div>
-                </form> */}
             </div>
            
         );

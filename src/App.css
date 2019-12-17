@@ -23,11 +23,13 @@
   color: whitesmoke;
 }
 .row .form-control{
+  text-align: center;
   color: whitesmoke;
   background: rgba(0,0,0, .38);
   border-color: #1F1A24;
 }
 .row .form-control:focus {
+  text-align: center;
   color: whitesmoke;
   background: rgba(0,0,0, .6);
   border-color: gray;
@@ -37,4 +39,11 @@
   color: whitesmoke;
   margin-top: 24px;
   font-size: 44px;
+}
+
+.app-description {
+  color: gray;
+  margin-top: 24px;
+  width: 100%;
+  justify-content: center;
 }
