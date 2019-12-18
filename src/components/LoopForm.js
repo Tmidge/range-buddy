@@ -147,7 +147,7 @@ export default class LoopForm extends React.Component {
                     <audio ref={this.eight} id="eight" src={eight}/>
                 </div>
                 <Form onSubmit={this.createSoundLoop}>
-                    <Row>
+                    <Row className="top-level-row">
                         <Col className="down-buttons">
                             <Row>
                                 <Button className="first-button" size="lg" name="initialDelay" variant="dark" onClick={this.handleDownButtonClick}>
@@ -220,7 +220,7 @@ export default class LoopForm extends React.Component {
                     </Row>
                     {(() => {
                         if(this.state.isRunning) {
-                            return  <Row>
+                            return  <Row className="top-level-row">
                                         <Col>
                                         </Col>
                                         <Col xs={8}>
@@ -232,7 +232,7 @@ export default class LoopForm extends React.Component {
                         }
                     }
                     )()}
-                    <Row>
+                    <Row className="top-level-row">
                         <div className="app-description">
                             This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-6. It is in development and features are added frequently.
                         </div>
