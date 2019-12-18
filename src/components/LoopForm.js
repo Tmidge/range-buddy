@@ -103,12 +103,14 @@ export default class LoopForm extends React.Component {
     
     handleUpButtonClick(event) {
         event.preventDefault();
-        this.setState({[event.target.name]: this.state[event.target.name] + 1});
+        const number = parseInt(this.state[event.target.name]) >= 0 ? parseInt(this.state[event.target.name]) + 1 : 1;
+        this.setState({[event.target.name]: number});
     }
 
     handleDownButtonClick(event) {
         event.preventDefault();
-        this.setState({[event.target.name]: this.state[event.target.name] - 1});
+        const number = parseInt(this.state[event.target.name]) > 0 ? parseInt(this.state[event.target.name]) - 1 : 1;
+        this.setState({[event.target.name]: number});
     }
 
     runLoop() {
