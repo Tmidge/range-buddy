@@ -1,5 +1,6 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,6 +11,8 @@ import three from '../assets/3.wav';
 import four from '../assets/4.wav';
 import five from '../assets/5.wav';
 import six from '../assets/6.wav';
+import seven from '../assets/7.wav';
+import eight from '../assets/8.wav';
 
 export default class LoopForm extends React.Component {
     constructor() {
@@ -32,6 +35,7 @@ export default class LoopForm extends React.Component {
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
         this.handleUpButtonClick = this.handleUpButtonClick.bind(this);
         this.handleDownButtonClick = this.handleDownButtonClick.bind(this);
+        this.dropDownChange = this.dropDownChange.bind(this);
 
 
         this.one = React.createRef();
@@ -40,9 +44,13 @@ export default class LoopForm extends React.Component {
         this.four = React.createRef();
         this.five = React.createRef();
         this.six = React.createRef();
+        this.seven = React.createRef();
+        this.eight = React.createRef();
     }
 
-    
+    dropDownChange(event) {
+        console.log(event.target);
+    }
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
@@ -83,6 +91,12 @@ export default class LoopForm extends React.Component {
 
         this.six.current.play();
         this.six.current.pause();
+
+        this.seven.current.play();
+        this.seven.current.pause();
+
+        this.eight.current.play();
+        this.eight.current.pause();
 
         this.setState({isRunning: true}, this.runLoop(event));
     } 
@@ -129,6 +143,8 @@ export default class LoopForm extends React.Component {
                     <audio ref={this.four} id="four" src={four}/>
                     <audio ref={this.five} id="five" src={five}/>
                     <audio ref={this.six} id="six" src={six}/>
+                    <audio ref={this.seven} id="seven" src={seven}/>
+                    <audio ref={this.eight} id="eight" src={eight}/>
                 </div>
                 <Form onSubmit={this.createSoundLoop}>
                     <Row>
@@ -150,6 +166,18 @@ export default class LoopForm extends React.Component {
                             </Row>
                         </Col>
                         <Col xs={8}>
+                            {/* <Form.Label>Number of targets: </Form.Label>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    Dropdown Button
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onSelect={this.dropDownChange}>1</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown> */}
                             <Form.Label>Initial Delay: </Form.Label>
                             <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
                             <Form.Text className="text-muted">
@@ -205,7 +233,7 @@ export default class LoopForm extends React.Component {
                     }
                     )()}
                     <Row>
-                        <div class="app-description">
+                        <div className="app-description">
                             This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-6. It is in development and features are added frequently.
                         </div>
                     </Row>

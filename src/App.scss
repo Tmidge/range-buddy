@@ -10,7 +10,7 @@
 }
 
 .up-buttons .row .first-button.btn.btn-dark, .down-buttons .row .first-button.btn.btn-dark {
-  margin-top: 32px;
+  margin-top: 40px;
 }
 
 .up-buttons .btn.btn-dark {
@@ -21,12 +21,13 @@
 .down-buttons .row {
   justify-content: flex-end;
   .btn.btn-dark{
-    margin-top: 55px;
+    margin-top: 62px;
   }
 }
 
 .form-label {
   color: whitesmoke;
+  margin-top: 8px;
 }
 .row {
     .form-control {
