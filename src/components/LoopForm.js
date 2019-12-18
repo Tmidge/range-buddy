@@ -1,6 +1,6 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
+// import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,6 +13,7 @@ import five from '../assets/5.wav';
 import six from '../assets/6.wav';
 import seven from '../assets/7.wav';
 import eight from '../assets/8.wav';
+import startTone from '../assets/HOLD.wav';
 
 export default class LoopForm extends React.Component {
     constructor() {
@@ -46,6 +47,8 @@ export default class LoopForm extends React.Component {
         this.six = React.createRef();
         this.seven = React.createRef();
         this.eight = React.createRef();
+
+        this.startTone = React.createRef();
     }
 
     dropDownChange(event) {
@@ -98,6 +101,8 @@ export default class LoopForm extends React.Component {
         this.eight.current.play();
         this.eight.current.pause();
 
+        this.startTone.current.play();
+
         this.setState({isRunning: true}, this.runLoop(event));
     } 
     
@@ -147,6 +152,9 @@ export default class LoopForm extends React.Component {
                     <audio ref={this.six} id="six" src={six}/>
                     <audio ref={this.seven} id="seven" src={seven}/>
                     <audio ref={this.eight} id="eight" src={eight}/>
+
+                    <audio ref={this.startTone} id="startTone" src={startTone}/>
+
                 </div>
                 <Form onSubmit={this.createSoundLoop}>
                     <Row className="top-level-row">
