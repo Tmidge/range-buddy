@@ -5,33 +5,33 @@
   height: 100vh;
 }
 
-.col-8 .btn.btn-dark {
-  margin-top: 24px;
+.button-col {
+  display: flex;
+  align-self: center;
+  justify-content: flex-end;
+  margin-top: 39px;
+  &.button-right {
+    justify-content: flex-start;
+  }
+}
+
+.submit-row {
+  justify-content: center;
 }
 
 .btn.btn-dark {
-  height: 52px;
-  width: 52px;
+  height: 48px;
+  width: 48px;
   &.submit-button {
     height: 72px;
     width: 108px;
+    justify-self: center;
+    margin-top: 24px;
   }
 }
 
 .up-buttons .row .first-button.btn.btn-dark, .down-buttons .row .first-button.btn.btn-dark {
   margin-top: 37px
-}
-
-.up-buttons .btn.btn-dark {
-  margin-top: 60px;
-  float: left;
-}
-
-.down-buttons .row {
-  justify-content: flex-end;
-  .btn.btn-dark{
-    margin-top: 60px;
-  }
 }
 
 .form-label {
@@ -69,4 +69,9 @@
   width: 100%;
   justify-content: center;
   padding: 0 24px;
+}
+
+.text-muted {
+  width: 100%;
+  justify-self: center;
 }
