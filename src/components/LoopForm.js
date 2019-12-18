@@ -196,7 +196,7 @@ export default class LoopForm extends React.Component {
                                 Delay between each call out.
                             </Form.Text>
 
-                            <Button variant="dark" size="lg" type="submit" value="Submit">
+                            <Button className="submit-button" variant="dark" size="lg" type="submit" value="Submit">
                                 GO!
                             </Button>
                         </Col>

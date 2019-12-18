@@ -9,19 +9,28 @@
   margin-top: 24px;
 }
 
+.btn.btn-dark {
+  height: 52px;
+  width: 52px;
+  &.submit-button {
+    height: 72px;
+    width: 108px;
+  }
+}
+
 .up-buttons .row .first-button.btn.btn-dark, .down-buttons .row .first-button.btn.btn-dark {
-  margin-top: 40px;
+  margin-top: 37px
 }
 
 .up-buttons .btn.btn-dark {
-  margin-top: 62px;
+  margin-top: 60px;
   float: left;
 }
 
 .down-buttons .row {
   justify-content: flex-end;
   .btn.btn-dark{
-    margin-top: 62px;
+    margin-top: 60px;
   }
 }
 
