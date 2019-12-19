@@ -5,6 +5,28 @@
   height: 100vh;
 }
 
+.target-info {
+  margin-bottom: 30px;
+  h3, h4 {
+    color: #6c757d;
+  }
+  h1, h3, h4 {
+    width: 100%;
+  }
+  .row {
+    color: whitesmoke;
+  }
+  .target-number {
+    width: 100%;
+    font-size: 128px;
+    margin: -24px 0;
+  }
+  .last, .next {
+    color: #6c757d;
+    font-size: 84px;
+  }
+}
+
 .button-col {
   display: flex;
   align-self: center;
@@ -64,7 +86,14 @@
 }
 
 .app-description {
-  color: gray;
+  color: #6c757d;
+}
+
+.known-issues {
+  color: #CF6679;
+}
+
+.known-issues, .app-description {
   margin-top: 24px;
   width: 100%;
   justify-content: center;
@@ -74,4 +103,5 @@
 .text-muted {
   width: 100%;
   justify-self: center;
+  padding: 0 8px;
 }

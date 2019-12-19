@@ -1,4 +1,5 @@
 import React from "react";
+import wordsToNumbers from 'words-to-numbers';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -19,6 +20,9 @@ import twelve from '../assets/12.wav';
 import startTone from '../assets/HOLD.wav';
 import tone from '../assets/Dtmf-4.wav';
 
+//TODO can get in strage state after pressing play to quickly after stop.
+//TODO after pressing stop console errors for audio elements.
+
 
 export default class LoopForm extends React.Component {
     constructor() {
@@ -36,6 +40,10 @@ export default class LoopForm extends React.Component {
             delayArray: [],
             isRunning: false,
             targetCount: 8,
+            submitted: false,
+            current: null,
+            last: null,
+            next: null,
         };
 
         this.createSoundLoop = this.createSoundLoop.bind(this);
@@ -68,8 +76,11 @@ export default class LoopForm extends React.Component {
         event.preventDefault();
 
         this.state.delayArray.forEach( delay => clearTimeout(delay));
-        this.setState({delayArray: []});
-        this.setState({isRunning: false});
+        this.setState({last: null});
+        this.setState({current: null});
+        this.setState({next: null});
+        this.setState({delayArray: []}, this.setState({isRunning: false}));
+        
     }
 
     handleChange(event) {
@@ -82,48 +93,15 @@ export default class LoopForm extends React.Component {
 
     createSoundLoop(event) {
         event.preventDefault();
+        this.setState({submitted: true});
         if(this.state.isRunning === true) {
             return;
         } else {
             this.setState({stop: false});
+            this.setState({last: null});
+            this.setState({current: null});
+            this.setState({next: null});
         }
-        this.one.current.play();
-        this.one.current.pause();
-
-        this.two.current.play();
-        this.two.current.pause();
-
-        this.three.current.play();
-        this.three.current.pause();
-
-        this.four.current.play();
-        this.four.current.pause();
-
-        this.five.current.play();
-        this.five.current.pause();
-
-        this.six.current.play();
-        this.six.current.pause();
-
-        this.seven.current.play();
-        this.seven.current.pause();
-
-        this.eight.current.play();
-        this.eight.current.pause();
-
-        this.nine.current.play();
-        this.nine.current.pause();
-
-        this.ten.current.play();
-        this.ten.current.pause();
-
-        this.eleven.current.play();
-        this.eleven.current.pause();
-
-        this.twelve.current.play();
-        this.twelve.current.pause();
-
-        this.startTone.current.play();
 
         this.setState({isRunning: true}, this.runLoop(event));
     } 
@@ -166,6 +144,8 @@ export default class LoopForm extends React.Component {
     }
 
     runLoop() {
+        this.initSounds();
+        this.setState({submitted: false});
         const computedCount = parseInt(this.state.count);
         let soundArray = [];
         const targets = this.state.sounds.slice(0,this.state.targetCount);
@@ -176,12 +156,16 @@ export default class LoopForm extends React.Component {
 
         setTimeout(()=>{
             let delayArray = [];
+            console.log('Full array: ', soundArray);
             soundArray.forEach((soundRef, i) => {
                 const soundDelay = setTimeout(()=>{ 
                     if(i === (soundArray.length -1)) {
                         this.setState({isRunning: false});
                         this.setState({delayArray: []});
                     }
+                    this.setState({last: soundArray[i-1]});
+                    this.setState({current: soundRef});
+                    this.setState({next: soundArray[i+1]});
                     this[soundRef].current.play();
                 },
                 i * this.state.delay * 1000);
@@ -189,6 +173,14 @@ export default class LoopForm extends React.Component {
                 this.setState({delayArray});
             });
         }, parseInt(this.state.initialDelay) * 1000);
+    }
+
+    wordFormat(string) {
+        if(string) {
+            return wordsToNumbers(string);
+        } else {
+            return '-';
+        }
     }
 
     render() {
@@ -216,102 +208,138 @@ export default class LoopForm extends React.Component {
                 <Form onSubmit={this.createSoundLoop}>
                     <Row className="top-level-row">
                         <Col xs={12}>
-                            <Row>
-                                <Col className="button-col">
-                                    <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleDownButtonClick}>
-                                        -
-                                    </Button>
-                                </Col>
-                                <Col xs={6}>
-                                    <Form.Label>Initial Delay: </Form.Label>
-                                    <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
-                                </Col>
-                                <Col className="button-col button-right">
-                                    <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleUpButtonClick}>
-                                        +
-                                    </Button>
-                                </Col>
-                                <Form.Text className="text-muted">
-                                    One time Pause before first call out.
-                                </Form.Text>
-                            </Row>
-                            <Row>
-                                <Col className="button-col">
-                                    <Button size="lg" name="count" variant="dark" onClick={this.handleDownButtonClick}>
-                                        -
-                                    </Button>
-                                </Col>
-                                <Col xs={6}>
-                                    <Form.Label >Count: </Form.Label>
-                                    <Form.Control size="lg" name="count" type="text" value={this.state.count} onChange={this.handleChange}/>
-                                </Col>
-                                <Col className="button-col button-right">
-                                    <Button size="lg" name="count" variant="dark" onClick={this.handleUpButtonClick}>
-                                        +
-                                    </Button>
-                                </Col>
-                                <Form.Text className="text-muted">
-                                    Number of call outs.
-                                </Form.Text>
-                            </Row>
-                            <Row>
-                                <Col className="button-col">
-                                    <Button size="lg" name="delay" variant="dark" onClick={this.handleDownButtonClick}>
-                                        -
-                                    </Button>
-                                </Col>
-                                <Col xs={6}>
-                                    <Form.Label >Delay: </Form.Label>
-                                    <Form.Control size="lg" name="delay" type="text" value={this.state.delay} onChange={this.handleChange}/>
-                                    
-                                </Col>
-                                <Col className="button-col button-right">
-                                    <Button size="lg" name="delay" variant="dark" onClick={this.handleUpButtonClick}>
-                                        +
-                                    </Button>
-                                </Col>
-                                <Form.Text className="text-muted">
-                                    Delay between each call out.
-                                </Form.Text>
-                            </Row>
-                            <Row>
-                                <Col className="button-col">
-                                    <Button size="lg" name="targetCount" variant="dark" onClick={this.handleDownButtonClick}>
-                                        -
-                                    </Button>
-                                </Col>
-                                <Col xs={6}>
-                                    <Form.Label >Targets: </Form.Label>
-                                    <Form.Control as="select" size="lg" name="targetCount" value={this.state.targetCount} onChange={this.handleChange}>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                    </Form.Control>
-                                </Col>
-                                <Col className="button-col button-right">
-                                    <Button size="lg" name="targetCount" variant="dark" onClick={this.handleUpButtonClick}>
-                                        +
-                                    </Button>
-                                </Col>
-                                <Form.Text className="text-muted">
-                                    Drop down to define range for call out numbers. Selecting 4 means the call outs will be choosen from the numbers 1-4.
-                                </Form.Text>
-                            </Row>
-                            
+                            {(() => {
+                                if(this.state.isRunning) {
+                                    return <Col className="target-info">
+                                        <Row>
+                                            <h3>
+                                                Last
+                                            </h3>
+                                            <div className="target-number last">
+                                                {this.wordFormat(this.state.last)}
+                                            </div>
+                                        </Row>
+                                        <Row>
+                                            <h1>
+                                                Current
+                                            </h1>
+                                            <div className="target-number current">
+                                                {this.wordFormat(this.state.current)}
+                                            </div>
+                                        </Row>
+                                        <Row>
+                                            <h4>
+                                                Next
+                                            </h4>
+                                            <div className="target-number next">
+                                                {this.wordFormat(this.state.next)}
+                                            </div>
+                                        </Row>
+                                    </Col>
+                                } else {
+                                    return <Row>
+                                    <Row>
+                                        <Col className="button-col">
+                                            <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleDownButtonClick}>
+                                                -
+                                            </Button>
+                                        </Col>
+                                        <Col xs={6}>
+                                            <Form.Label>Initial Delay: </Form.Label>
+                                            <Form.Control size="lg" name="initialDelay" type="text" value={this.state.initialDelay} onChange={this.handleChange}/>
+                                        </Col>
+                                        <Col className="button-col button-right">
+                                            <Button size="lg" name="initialDelay" variant="dark" onClick={this.handleUpButtonClick}>
+                                                +
+                                            </Button>
+                                        </Col>
+                                        <Form.Text className="text-muted">
+                                            One time Pause before first call out.
+                                        </Form.Text>
+                                    </Row>
+                                    <Row>
+                                        <Col className="button-col">
+                                            <Button size="lg" name="count" variant="dark" onClick={this.handleDownButtonClick}>
+                                                -
+                                            </Button>
+                                        </Col>
+                                        <Col xs={6}>
+                                            <Form.Label >Count: </Form.Label>
+                                            <Form.Control size="lg" name="count" type="text" value={this.state.count} onChange={this.handleChange}/>
+                                        </Col>
+                                        <Col className="button-col button-right">
+                                            <Button size="lg" name="count" variant="dark" onClick={this.handleUpButtonClick}>
+                                                +
+                                            </Button>
+                                        </Col>
+                                        <Form.Text className="text-muted">
+                                            Number of call outs.
+                                        </Form.Text>
+                                    </Row>
+                                    <Row>
+                                        <Col className="button-col">
+                                            <Button size="lg" name="delay" variant="dark" onClick={this.handleDownButtonClick}>
+                                                -
+                                            </Button>
+                                        </Col>
+                                        <Col xs={6}>
+                                            <Form.Label >Delay: </Form.Label>
+                                            <Form.Control size="lg" name="delay" type="text" value={this.state.delay} onChange={this.handleChange}/>
+                                            
+                                        </Col>
+                                        <Col className="button-col button-right">
+                                            <Button size="lg" name="delay" variant="dark" onClick={this.handleUpButtonClick}>
+                                                +
+                                            </Button>
+                                        </Col>
+                                        <Form.Text className="text-muted">
+                                            Delay between each call out.
+                                        </Form.Text>
+                                    </Row>
+                                    <Row>
+                                        <Col className="button-col">
+                                            <Button size="lg" name="targetCount" variant="dark" onClick={this.handleDownButtonClick}>
+                                                -
+                                            </Button>
+                                        </Col>
+                                        <Col xs={6}>
+                                            <Form.Label >Targets: </Form.Label>
+                                            <Form.Control as="select" size="lg" name="targetCount" value={this.state.targetCount} onChange={this.handleChange}>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                                <option>11</option>
+                                                <option>12</option>
+                                            </Form.Control>
+                                        </Col>
+                                        <Col className="button-col button-right">
+                                            <Button size="lg" name="targetCount" variant="dark" onClick={this.handleUpButtonClick}>
+                                                +
+                                            </Button>
+                                        </Col>
+                                        <Form.Text className="text-muted">
+                                            Drop down to define range for call out numbers. Selecting 4 means the call outs will be choosen from the numbers 1-4.
+                                        </Form.Text>
+                                    </Row>
+                                </Row>
+                                }
+                            })()}
                             <Row className="submit-row">
                                 {(() => {
                                     if(this.state.isRunning) {
-                                        return <Button className="submit-button" variant="dark" size="lg" onClick={this.stopLoop}>
-                                                    STOP
+                                        return <Button disabled={this.state.submitted}
+                                                    className="submit-button"
+                                                    variant="dark"
+                                                    size="lg" 
+                                                    onClick={this.stopLoop}>
+                                                        STOP
                                                 </Button>
                                     } else {
                                         return <Button className="submit-button" variant="dark" size="lg" type="submit" value="Submit">
@@ -322,21 +350,10 @@ export default class LoopForm extends React.Component {
                             </Row>
                         </Col>
                     </Row>
-                    {/* {(() => {
-                        if(this.state.isRunning) {
-                            return  <Row className="top-level-row">
-                                        <Col>
-                                        </Col>
-                                        <Col xs={8}>
-                                            <Form.Label className="Running-text">RUNNING</Form.Label>
-                                        </Col>
-                                        <Col>
-                                        </Col>
-                                    </Row>
-                        }
-                    }
-                    )()} */}
                     <Row className="top-level-row">
+                        <div className="known-issues">
+                            The app can get into a bad state if go is pressed to quickly after stop, refreshing should fix this. Issue is being worked on.
+                        </div>
                         <div className="app-description">
                             This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-12. It is in development and features are added frequently.
                         </div>
@@ -345,6 +362,46 @@ export default class LoopForm extends React.Component {
             </div>
            
         );
+    }
+
+    initSounds() {
+        this.one.current.play();
+        this.one.current.pause();
+
+        this.two.current.play();
+        this.two.current.pause();
+
+        this.three.current.play();
+        this.three.current.pause();
+
+        this.four.current.play();
+        this.four.current.pause();
+
+        this.five.current.play();
+        this.five.current.pause();
+
+        this.six.current.play();
+        this.six.current.pause();
+
+        this.seven.current.play();
+        this.seven.current.pause();
+
+        this.eight.current.play();
+        this.eight.current.pause();
+
+        this.nine.current.play();
+        this.nine.current.pause();
+
+        this.ten.current.play();
+        this.ten.current.pause();
+
+        this.eleven.current.play();
+        this.eleven.current.pause();
+
+        this.twelve.current.play();
+        this.twelve.current.pause();
+
+        this.startTone.current.play();
     }
 }
 
