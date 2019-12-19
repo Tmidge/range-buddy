@@ -352,7 +352,7 @@ export default class LoopForm extends React.Component {
                     </Row>
                     <Row className="top-level-row">
                         <div className="known-issues">
-                            The app can get into a bad state if go is pressed too quickly after stop, refreshing should fix this. Issue is being worked on.
+                            The app can get into a bad state if 'GO!' is pressed too quickly after 'STOP', refreshing should fix this. Issue is being worked on.
                         </div>
                         <div className="app-description">
                             This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-12. It is in development and features are added frequently.
