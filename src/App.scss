@@ -1,3 +1,7 @@
+$hint-color: #6c757d;
+$text-color: whitesmoke;
+$error-color: #CF6679;
+
 .App {
   padding-top: 16px;
   text-align: center;
@@ -12,13 +16,13 @@
 .target-info {
   margin-bottom: 30px;
   h3, h4 {
-    color: #6c757d;
+    color: $hint-color
   }
   h1, h3, h4 {
     width: 100%;
   }
   .row {
-    color: whitesmoke;
+    color: $text-color;
   }
   .target-number {
     width: 100%;
@@ -26,7 +30,7 @@
     margin: -24px 0;
   }
   .last, .next {
-    color: #6c757d;
+    color: $hint-color;
     font-size: 84px;
   }
 }
@@ -61,7 +65,7 @@
 }
 
 .form-label {
-  color: whitesmoke;
+  color: $text-color;
   margin-top: 8px;
 }
 .row {
@@ -71,12 +75,12 @@
     }
     .form-control {
       text-align: center;
-      color: whitesmoke;
+      color: $text-color;
       background: rgba(0,0,0, .38);
       border-color: #1F1A24;
       &:focus {
         text-align: center;
-        color: whitesmoke;
+        color: $text-color;
         background: rgba(0,0,0, .6);
         border-color: gray;
     }
@@ -84,17 +88,17 @@
 }
 
 .Running-text {
-  color: whitesmoke;
+  color: $text-color;
   margin-top: 24px;
   font-size: 44px;
 }
 
 .app-description {
-  color: #6c757d;
+  color: $hint-color;
 }
 
 .known-issues {
-  color: #CF6679;
+  color: $error-color;
 }
 
 .known-issues, .app-description {
