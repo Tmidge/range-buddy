@@ -25,14 +25,15 @@ export default class LoopForm extends React.Component {
         super();
 
         this.state = {
-            count: 10,
-            delay: 4,
-            initialDelay: 5,
+            count: 20,
+            delay: 2,
+            initialDelay: 1,
             sounds: ['one','two','three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'],
             randomDelayMin: 0,
             randomDelayMax: 0,
             random: null,
             soundArray: [],
+            delayArray: [],
             isRunning: false,
             targetCount: 8,
         };
@@ -42,7 +43,7 @@ export default class LoopForm extends React.Component {
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
         this.handleUpButtonClick = this.handleUpButtonClick.bind(this);
         this.handleDownButtonClick = this.handleDownButtonClick.bind(this);
-        this.dropDownChange = this.dropDownChange.bind(this);
+        this.stopLoop = this.stopLoop.bind(this);
 
 
         this.one = React.createRef();
@@ -63,12 +64,15 @@ export default class LoopForm extends React.Component {
         this.startTone = React.createRef();
     }
 
-    dropDownChange(event) {
-        console.log(event.target);
+    stopLoop(event) {
+        event.preventDefault();
+
+        this.state.delayArray.forEach( delay => clearTimeout(delay));
+        this.setState({delayArray: []});
+        this.setState({isRunning: false});
     }
 
     handleChange(event) {
-        console.log('event: ', event.target.value);
         this.setState({[event.target.name]: event.target.value});
     }
 
@@ -80,6 +84,8 @@ export default class LoopForm extends React.Component {
         event.preventDefault();
         if(this.state.isRunning === true) {
             return;
+        } else {
+            this.setState({stop: false});
         }
         this.one.current.play();
         this.one.current.pause();
@@ -123,7 +129,6 @@ export default class LoopForm extends React.Component {
     } 
     
     handleUpButtonClick(event) {
-        console.log('event: ', event.target);
         const targetMaximum = 12;
         let maximum = 100;
         let number;
@@ -139,13 +144,11 @@ export default class LoopForm extends React.Component {
         } else {
             number = 1;
         }
-        // const number = parseInt(this.state[event.target.name]) >= 0 ? parseInt(this.state[event.target.name]) + 1 : 1;
         this.setState({[event.target.name]: number});
     }
 
     handleDownButtonClick(event) {
         event.preventDefault();
-        // const number = parseInt(this.state[event.target.name]) > 0 ? parseInt(this.state[event.target.name]) - 1 : 0;
         let number;
         let minimum = 0;
         const targetMinimum = 1;
@@ -169,18 +172,21 @@ export default class LoopForm extends React.Component {
         for (var i=0; i < computedCount; i++) {
             soundArray.push(targets[Math.floor(Math.random()*targets.length)]);
         }
-        console.log(soundArray);
         this.setState({soundArray});
 
         setTimeout(()=>{
+            let delayArray = [];
             soundArray.forEach((soundRef, i) => {
-                setTimeout(()=>{ 
-                    this[soundRef].current.play();
+                const soundDelay = setTimeout(()=>{ 
                     if(i === (soundArray.length -1)) {
                         this.setState({isRunning: false});
+                        this.setState({delayArray: []});
                     }
+                    this[soundRef].current.play();
                 },
                 i * this.state.delay * 1000);
+                delayArray.push(soundDelay);
+                this.setState({delayArray});
             });
         }, parseInt(this.state.initialDelay) * 1000);
     }
@@ -297,18 +303,26 @@ export default class LoopForm extends React.Component {
                                     </Button>
                                 </Col>
                                 <Form.Text className="text-muted">
-                                    Drop down with number of targets
+                                    Drop down to define range for call out numbers. Selecting 4 means the call outs will be choosen from the numbers 1-4.
                                 </Form.Text>
                             </Row>
                             
                             <Row className="submit-row">
-                                <Button className="submit-button" variant="dark" size="lg" type="submit" value="Submit">
-                                    GO!
-                                </Button>
+                                {(() => {
+                                    if(this.state.isRunning) {
+                                        return <Button className="submit-button" variant="dark" size="lg" onClick={this.stopLoop}>
+                                                    STOP
+                                                </Button>
+                                    } else {
+                                        return <Button className="submit-button" variant="dark" size="lg" type="submit" value="Submit">
+                                                    GO!
+                                                </Button>
+                                    }
+                                })()}
                             </Row>
                         </Col>
                     </Row>
-                    {(() => {
+                    {/* {(() => {
                         if(this.state.isRunning) {
                             return  <Row className="top-level-row">
                                         <Col>
@@ -321,7 +335,7 @@ export default class LoopForm extends React.Component {
                                     </Row>
                         }
                     }
-                    )()}
+                    )()} */}
                     <Row className="top-level-row">
                         <div className="app-description">
                             This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-12. It is in development and features are added frequently.
