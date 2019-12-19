@@ -30,8 +30,8 @@ export default class LoopForm extends React.Component {
 
         this.state = {
             count: 20,
-            delay: 2,
-            initialDelay: 1,
+            delay: 3,
+            initialDelay: 8,
             sounds: ['one','two','three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'],
             randomDelayMin: 0,
             randomDelayMax: 0,
@@ -39,7 +39,7 @@ export default class LoopForm extends React.Component {
             soundArray: [],
             delayArray: [],
             isRunning: false,
-            targetCount: 8,
+            targetCount: 6,
             submitted: false,
             current: null,
             last: null,
