@@ -135,10 +135,7 @@ export default class LoopForm extends React.Component {
         } 
 
         if (Number(this.state[event.target.name]) >= 0 && Number(this.state[event.target.name]) < maximum) {
-            console.log('up ');
             number = Number(this.state[event.target.name]) + increment;
-            console.log( Number(this.state[event.target.name]));
-            //TODO this isnt working right
         } else if (Number(this.state[event.target.name]) === maximum){
             number = maximum;
         } else {
