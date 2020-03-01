@@ -124,18 +124,25 @@ export default class LoopForm extends React.Component {
         const targetMaximum = 12;
         let maximum = 100;
         let number;
+        let increment = 1;
 
         event.preventDefault();
+
         if (event.target.name === 'targetCount') {
             maximum = targetMaximum;
+        } else if (event.target.name === 'delay') {
+            increment = 0.5;
         } 
-        if (parseInt(this.state[event.target.name]) >= 0 && parseInt(this.state[event.target.name]) < maximum) {
-            number = parseInt(this.state[event.target.name]) + 1;
+
+        if (Number(this.state[event.target.name]) >= 0 && Number(this.state[event.target.name]) < maximum) {
+            console.log('up ');
+            number = Number(this.state[event.target.name]) + increment;
+            console.log( Number(this.state[event.target.name]));
             //TODO this isnt working right
-        } else if (parseInt(event.target.value) === maximum){
+        } else if (Number(this.state[event.target.name]) === maximum){
             number = maximum;
         } else {
-            number = 1;
+            number = increment;
         }
         this.setState({[event.target.name]: number});
     }
@@ -146,9 +153,14 @@ export default class LoopForm extends React.Component {
         let minimum = 1;
         let increment = 1;
 
-        if (parseInt(this.state[event.target.name]) >= 0 && parseInt(this.state[event.target.name]) > minimum) {
-            number = parseInt(this.state[event.target.name]) - increment;
-        } else if (parseInt(this.state[event.target.value]) === minimum){
+        if (event.target.name === 'delay') {
+            minimum = 0.5;
+            increment = 0.5;
+        } 
+
+        if (Number(this.state[event.target.name]) >= 0 && Number(this.state[event.target.name]) > minimum) {
+            number = Number(this.state[event.target.name]) - increment;
+        } else if (Number(this.state[event.target.name]) === minimum){
             number = minimum;
         } else {
             number = increment;
@@ -159,7 +171,7 @@ export default class LoopForm extends React.Component {
     runLoop() {
         this.initSounds();
         this.setState({submitted: false});
-        const computedCount = parseInt(this.state.count);
+        const computedCount = Number(this.state.count);
         let soundArray = [];
         const targets = this.state.sounds.slice(0,this.state.targetCount);
         for (var i=0; i < computedCount; i++) {
@@ -189,7 +201,7 @@ export default class LoopForm extends React.Component {
                 delayArray.push(soundDelay);
                 this.setState({delayArray});
             });
-        }, parseInt(this.state.initialDelay) * 1000);
+        }, Number(this.state.initialDelay) * 1000);
     }
 
     wordFormat(string) {
