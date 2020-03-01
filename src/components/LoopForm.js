@@ -110,10 +110,11 @@ export default class LoopForm extends React.Component {
         const targetMaximum = 12;
         let maximum = 100;
         let number;
+
         event.preventDefault();
         if (event.target.name === 'targetCount') {
             maximum = targetMaximum;
-        }
+        } 
         if (parseInt(this.state[event.target.name]) >= 0 && parseInt(this.state[event.target.name]) < maximum) {
             number = parseInt(this.state[event.target.name]) + 1;
             //TODO this isnt working right
@@ -128,17 +129,15 @@ export default class LoopForm extends React.Component {
     handleDownButtonClick(event) {
         event.preventDefault();
         let number;
-        let minimum = 0;
-        const targetMinimum = 1;
-        if (event.target.name === 'targetCount') {
-            minimum = targetMinimum;
-        }
+        let minimum = 1;
+        let increment = 1;
+
         if (parseInt(this.state[event.target.name]) >= 0 && parseInt(this.state[event.target.name]) > minimum) {
-            number = parseInt(this.state[event.target.name]) - 1;
+            number = parseInt(this.state[event.target.name]) - increment;
         } else if (parseInt(this.state[event.target.value]) === minimum){
             number = minimum;
         } else {
-            number = 1;
+            number = increment;
         }
         this.setState({[event.target.name]: number});
     }
@@ -156,8 +155,9 @@ export default class LoopForm extends React.Component {
 
         setTimeout(()=>{
             let delayArray = [];
-            console.log('Full array: ', soundArray);
             soundArray.forEach((soundRef, i) => {
+                const delay = (i * this.state.delay) * 1000;
+
                 const soundDelay = setTimeout(()=>{ 
                     if(i === (soundArray.length -1)) {
                         this.setState({isRunning: false});
@@ -167,8 +167,8 @@ export default class LoopForm extends React.Component {
                     this.setState({current: soundRef});
                     this.setState({next: soundArray[i+1]});
                     this[soundRef].current.play();
-                },
-                i * this.state.delay * 1000);
+                }, delay);
+
                 delayArray.push(soundDelay);
                 this.setState({delayArray});
             });
@@ -199,7 +199,6 @@ export default class LoopForm extends React.Component {
                     <audio ref={this.ten} id="ten" src={ten}/>
                     <audio ref={this.eleven} id="eleven" src={eleven}/>
                     <audio ref={this.twelve} id="twelve" src={twelve}/>
-
 
                     <audio ref={this.startTone} id="startTone" src={startTone}/>
                     <audio ref={this.tone} id="tone" src={tone}/>
@@ -365,41 +364,25 @@ export default class LoopForm extends React.Component {
     }
 
     initSounds() {
-        this.one.current.play();
-        this.one.current.pause();
+        const sounds = [
+            this.one, 
+            this.two, 
+            this.three, 
+            this.four, 
+            this.five, 
+            this.six, 
+            this.seven, 
+            this.eight, 
+            this.nine, 
+            this.ten, 
+            this.eleven, 
+            this.twelve
+        ];
 
-        this.two.current.play();
-        this.two.current.pause();
-
-        this.three.current.play();
-        this.three.current.pause();
-
-        this.four.current.play();
-        this.four.current.pause();
-
-        this.five.current.play();
-        this.five.current.pause();
-
-        this.six.current.play();
-        this.six.current.pause();
-
-        this.seven.current.play();
-        this.seven.current.pause();
-
-        this.eight.current.play();
-        this.eight.current.pause();
-
-        this.nine.current.play();
-        this.nine.current.pause();
-
-        this.ten.current.play();
-        this.ten.current.pause();
-
-        this.eleven.current.play();
-        this.eleven.current.pause();
-
-        this.twelve.current.play();
-        this.twelve.current.pause();
+        sounds.forEach(sound => {
+            sound.current.play();
+            sound.current.pause();
+        })
 
         this.startTone.current.play();
     }
