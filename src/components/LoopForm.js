@@ -160,6 +160,9 @@ export default class LoopForm extends React.Component {
                         this.setState({isRunning: false});
                         this.setState({delayArray: []});
                     }
+                    this[soundRef].current.pause();
+                    this[soundRef].current.currentTime = 0;
+
                     this.setState({last: soundArray[i-1]});
                     this.setState({current: soundRef});
                     this.setState({next: soundArray[i+1]});
@@ -290,9 +293,6 @@ export default class LoopForm extends React.Component {
                                         </Col>
                                         <Form.Text className="text-muted">
                                             Delay between each call out.
-                                        </Form.Text>
-                                        <Form.Text className="known-issues">
-                                            lower than 1 second can lead to numbers being skipped.
                                         </Form.Text>
                                     </Row>
                                     <Row>
