@@ -65,6 +65,21 @@ export default class LoopForm extends React.Component {
         this.eleven = React.createRef();
         this.twelve = React.createRef();
 
+        this.sounds = [
+            this.one, 
+            this.two, 
+            this.three, 
+            this.four, 
+            this.five, 
+            this.six, 
+            this.seven, 
+            this.eight, 
+            this.nine, 
+            this.ten, 
+            this.eleven, 
+            this.twelve
+        ];
+
 
         this.tone = React.createRef();
         this.startTone = React.createRef();
@@ -74,9 +89,11 @@ export default class LoopForm extends React.Component {
         event.preventDefault();
 
         this.state.delayArray.forEach( delay => clearTimeout(delay));
+        this.stopSounds();
         this.setState({last: null});
         this.setState({current: null});
         this.setState({next: null});
+        this.setState({soundArray: []});
         this.setState({delayArray: []}, this.setState({isRunning: false}));
     }
 
@@ -367,22 +384,7 @@ export default class LoopForm extends React.Component {
     }
 
     initSounds() {
-        const sounds = [
-            this.one, 
-            this.two, 
-            this.three, 
-            this.four, 
-            this.five, 
-            this.six, 
-            this.seven, 
-            this.eight, 
-            this.nine, 
-            this.ten, 
-            this.eleven, 
-            this.twelve
-        ];
-
-        sounds.forEach(sound => {
+        this.sounds.forEach(sound => {
             sound.current.play();
             sound.current.pause();
         })
