@@ -292,7 +292,10 @@ export default class LoopForm extends React.Component {
                                             </Button>
                                         </Col>
                                         <Form.Text className="text-muted">
-                                            Delay between each call out.
+                                            Delay between each call out in seconds.
+                                        </Form.Text>
+                                        <Form.Text className="text-muted">
+                                            Delay lower than 1 may cause sounds to be cut off.
                                         </Form.Text>
                                     </Row>
                                     <Row>
