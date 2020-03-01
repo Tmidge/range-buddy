@@ -21,17 +21,15 @@ import startTone from '../assets/HOLD.wav';
 import tone from '../assets/Dtmf-4.wav';
 
 //TODO can get in strage state after pressing play to quickly after stop.
-//TODO after pressing stop console errors for audio elements.
-
 
 export default class LoopForm extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            count: 20,
-            delay: 3,
-            initialDelay: 8,
+            count: 10,
+            delay: 1,
+            initialDelay: 3,
             sounds: ['one','two','three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'],
             randomDelayMin: 0,
             randomDelayMax: 0,
@@ -80,7 +78,6 @@ export default class LoopForm extends React.Component {
         this.setState({current: null});
         this.setState({next: null});
         this.setState({delayArray: []}, this.setState({isRunning: false}));
-        
     }
 
     handleChange(event) {
@@ -294,6 +291,9 @@ export default class LoopForm extends React.Component {
                                         <Form.Text className="text-muted">
                                             Delay between each call out.
                                         </Form.Text>
+                                        <Form.Text className="known-issues">
+                                            lower than 1 second can lead to numbers being skipped.
+                                        </Form.Text>
                                     </Row>
                                     <Row>
                                         <Col className="button-col">
@@ -351,10 +351,10 @@ export default class LoopForm extends React.Component {
                     </Row>
                     <Row className="top-level-row">
                         <div className="known-issues">
-                            The app can get into a bad state if 'GO!' is pressed too quickly after 'STOP', refreshing should fix this. Issue is being worked on.
+                            The app can get into a bad state if 'GO!' is pressed too quickly after 'STOP', refreshing should fix this.
                         </div>
                         <div className="app-description">
-                            This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-12. It is in development and features are added frequently.
+                            This app plays vocal call outs to be used when target shooting. Currently it only supports the numbers 1-12.
                         </div>
                     </Row>
                 </Form>
